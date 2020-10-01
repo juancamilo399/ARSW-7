@@ -1,9 +1,21 @@
 var Module = (function () {
 
 
+	var _asientos;
+
+	var _id;
 
 	var url = 'js/apiclient.js';
 	var cinemaFunction = {movie:{name: null , genre: null},seats:[],date:null}
+
+	class Seat {
+		constructor(row, col) {
+			this.row = row;
+			this.col = col;
+		}
+	}
+
+	var stompClient = null;
 
 	function _map(list){
 		return mapList = list.map(function(cinemaFunction){
@@ -13,6 +25,14 @@ var Module = (function () {
 				hora:cinemaFunction.date.split(" ")[1]
 			}
 		})
+	}
+
+	function setAsientos(asientos){
+		_asientos=asientos;
+	}
+
+	function setID(id){
+		_id=id;
 	}
 
 	function _table(cinemaFunctions){
@@ -36,6 +56,7 @@ var Module = (function () {
 	}
 
 	function getAvailability(movieName,date) {
+		connect();
 		cine = $("#name_input").val();
 		date = date
 		$("#movie_name").text("Availability of: "+movieName);
@@ -50,7 +71,10 @@ var Module = (function () {
 	function drawCanvas(data) {
 		clearCanvas();
 		setCinemaFunction(data);
-		var asientos = data.seats;
+		var id = cinemaFunction.date+cinemaFunction.movie.name+document.getElementById("name_input").value;
+		setID(id);
+		console.log(_id);
+		setAsientos(data.seats);
 		var c = document.getElementById("canvasId");
 		var ctx = c.getContext("2d");
 
@@ -60,10 +84,10 @@ var Module = (function () {
 		var a = document.getElementById("canvasId");
 
 		var atx = a.getContext("2d");
-		for (var i = 0; i < asientos[0].length; i++) {
-			for (var j = 0; j < asientos.length; j++) {
+		for (var i = 0; i < _asientos[0].length; i++) {
+			for (var j = 0; j < _asientos.length; j++) {
 				atx.fillStyle = "#9d9a9a";
-				if(asientos[j][i] == false){
+				if(_asientos[j][i] == false){
 					atx.fillStyle = "#b00303";
 				}
 				atx.fillRect(i*40 + 10, j*40 +105 , 20, 20);
@@ -122,12 +146,72 @@ var Module = (function () {
 		api.getFunctionsByCinemaAndDate(cinemaName,date,_table);
 	}
 
+	function connectAndSubscribe () {
+		console.info('Connecting to WS...');
+		var socket = new SockJS('/stompendpoint');
+		stompClient = Stomp.over(socket);
+
+		//subscribe to /topic/TOPICXX when connections succeed
+		stompClient.connect({}, function (frame) {
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/topic/buyticket.'+_id, function (eventbody) {
+				console.log("hola"+eventbody);
+				var theObject=JSON.parse(eventbody.body);
+				alert("row: "+theObject.row+" col: "+theObject.col);
+
+			});
+		});
+
+	};
+
+	function verifyAvailability (row,col) {
+		if (_asientos[row][col]){
+			_asientos[row][col]=false;
+			var st = new Seat(row, col);
+			stompClient.send("/app/buyticket."+_id, {}, JSON.stringify(st));
+			console.info("purchased ticket");
+		}
+		else{
+			console.info("Ticket not available");
+		}
+
+	}
+
+	function buyTicket (row, col) {
+		console.info("buying ticket at row: " + row + "col: " + col);
+		verifyAvailability(row,col);
+
+
+
+		//publicar el evento
+	}
+
+	function disconnect () {
+		if (stompClient !== null) {
+			stompClient.disconnect();
+		}
+		_id=null
+		console.log("Disconnected");
+	}
+
+	function connect(){
+		if (stompClient !== null) {
+			stompClient.disconnect();
+		}
+		connectAndSubscribe();
+
+	}
+
 
 	return {
 		getFunctionsByCinemaAndDate: getFunctionsByCinemaAndDate,
 		getAvailability: getAvailability,
 		updateFunction : updateFunction,
 		createFunction : createFunction,
-		deleteFunction : deleteFunction
+		deleteFunction : deleteFunction,
+		buyTicket:buyTicket,
+		disconnect:disconnect,
+		connect:connect
+
 	};
 })();
