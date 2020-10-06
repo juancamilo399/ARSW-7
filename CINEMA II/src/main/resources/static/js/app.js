@@ -35,6 +35,44 @@ var Module = (function () {
 		_id=id;
 	}
 
+	var getMousePosition = function (evt) {
+		$('#canvasId').click(function (e) {
+			canvas = document.getElementById("canvasId");
+			var rect = canvas.getBoundingClientRect();
+			var x = e.clientX - rect.left;
+			var y = e.clientY - rect.top;
+			findSeat(x,y);
+
+		});
+	}
+	function findSeat(x, y) {
+		var limiteXinf;
+		var limiteXsup;
+		var limiteYinf;
+		var limiteYsup;
+		var row = 5;
+		var col = 0;
+		for (var i = 0; i < _asientos.length; i++) {
+			row++;
+			col = 0;
+			for (j = 0; j < _asientos[i].length; j++) {
+				col++;
+				if (_asientos[i][j]) {
+					if (col == 0) {limiteXinf = 20;limiteXsup = 40;}
+					else {limiteXinf = 20 * col;limiteXsup = (20 * col) + 20;}
+					limiteYinf = (20 * row);
+					limiteYsup = (20 * row) + 20;
+					if (x >= limiteXinf && x <= limiteXsup && y >= limiteYinf && y <= limiteYsup) {
+						verifyAvailability(i,j);
+						break;
+					}
+					col++;
+				}
+			}
+			row++;
+		}
+	};
+
 	function _table(cinemaFunctions){
 		functions = _map(cinemaFunctions);
 		$("#table_cinema > tbody").empty();
@@ -73,27 +111,32 @@ var Module = (function () {
 		setCinemaFunction(data);
 		var id = cinemaFunction.date+cinemaFunction.movie.name+document.getElementById("name_input").value;
 		setID(id);
-		console.log(_id);
 		setAsientos(data.seats);
-		var c = document.getElementById("canvasId");
-		var ctx = c.getContext("2d");
-
-		ctx.fillStyle = "#0531ae";
-		ctx.fillRect(60, 20 , 380, 40);
-		ctx.beginPath();
-		var a = document.getElementById("canvasId");
-
-		var atx = a.getContext("2d");
-		for (var i = 0; i < _asientos[0].length; i++) {
-			for (var j = 0; j < _asientos.length; j++) {
-				atx.fillStyle = "#9d9a9a";
-				if(_asientos[j][i] == false){
-					atx.fillStyle = "#b00303";
+		c = document.getElementById("canvasId");
+		ctx = c.getContext("2d");
+		ctx.fillStyle = "#001933";
+		ctx.fillRect(100, 20, 300, 80);
+		ctx.fillStyle = "#FFFFFF";
+		ctx.font = "40px Arial";
+		ctx.fillText("Screen", 180, 70);
+		var row = 5;
+		var col = 0;
+		for (var i = 0; i < _asientos.length; i++) {
+			row++;
+			col = 0;
+			for (j = 0; j < _asientos[i].length; j++) {
+				if (_asientos[i][j]) {
+					ctx.fillStyle = "#009900";
+				} else {
+					ctx.fillStyle = "#FF0000";
 				}
-				atx.fillRect(i*40 + 10, j*40 +105 , 20, 20);
+				col++;
+				ctx.fillRect(20 * col, 20 * row, 20, 20);
+				col++;
 			}
+			row++;
 		}
-	}
+	};
 
 	function clearCanvas(){
 		var canvas = document.getElementById("canvasId");
@@ -118,7 +161,6 @@ var Module = (function () {
 		cinemaName = $("#name_input").val();
 		cinemaDate = $("#date_input").val();
 		functionHour = $("#new_function_hour").val();
-		console.log(functionHour);
 		newDate = $("#date_input").val()+" "+functionHour;
 		movieName = $("#new_movie_name").val();
 		genre = $("#new_genre").val();
@@ -170,6 +212,7 @@ var Module = (function () {
 			var st = new Seat(row, col);
 			stompClient.send("/app/buyticket."+_id, {}, JSON.stringify(st));
 			console.info("purchased ticket");
+			drawCanvas(cinemaFunction);
 		}
 		else{
 			console.info("Ticket not available");
@@ -177,13 +220,8 @@ var Module = (function () {
 
 	}
 
-	function buyTicket (row, col) {
-		console.info("buying ticket at row: " + row + "col: " + col);
-		verifyAvailability(row,col);
-
-
-
-		//publicar el evento
+	function buyTickets(){
+		getMousePosition();
 	}
 
 	function disconnect () {
@@ -209,9 +247,9 @@ var Module = (function () {
 		updateFunction : updateFunction,
 		createFunction : createFunction,
 		deleteFunction : deleteFunction,
-		buyTicket:buyTicket,
 		disconnect:disconnect,
-		connect:connect
+		connect:connect,
+		buyTickets:buyTickets,
 
 	};
 })();
