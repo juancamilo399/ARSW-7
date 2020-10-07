@@ -78,17 +78,22 @@
 
             <canvas id="canvasId" width="500" height="400" style="border:1px solid #000000;"></canvas>
             <button type="button" onclick="Module.deleteFunction()" class="btn btn-primary">Delete selected function</button>
+            <button type="button" class="btn btn-primary" onclick="Module.buyTickets()">Buy Tickets</button>
             <p></p>
 
+            <h3>Editar horario de la funcion</h3>
+            <hr/>
             <form class="form-inline">
                 <label for="new_hour">Function hour</label>
-                <input type="text" name="new_hour" id="new_hour" maxlength=8 pattern="^((\d+:)?\d+:)?\d*$" placeholder="hh:mm " size=30>
+                <input type="text" name="new_hour" id="new_hour" maxlength=8 pattern="^((\d+:)?\d+:)?\d*$" placeholder="hh:mm" >
                 <button type="button" onclick="Module.updateFunction()" class="btn btn-primary">Save/update</button>
 
             </form>
             <p></p>
             <p></p>
 
+            <h3>Crear una funcion</h3>
+            <hr/>
             <form>
                 <div class="form-group row">
                     <div class="col-sm-3">
@@ -103,23 +108,36 @@
                         <label for="new_genre">Genre</label>
                         <input type="text" class="form-control" id="new_genre" placeholder="Genre">
                     </div>
+                    <div class="col-sm-3">
+                        <label for="new_genre">Create Function</label>
+                        <button type="button" onclick="Module.createFunction()" class="btn btn-primary">Create Function</button>
+                    </div>
+                </div>
+                <h3>Conectarse a una funcion</h3>
+                <hr/>
+                <div class="form-group row">
+                    <div class="col-sm-5">
+                        <label for="name_input">Cinema name</label>
+                        <input type="text" class="form-control" id="cinema_input_suscribe" placeholder="write the name"/>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="new_function_hour">Fecha de la funcion</label>
+                        <input type="date" id="date_input_suscribe" name="date_input" placeholder="write the date"/>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="new_function_hour">Function hour</label>
+                        <input type="text" name="function_hour_suscribe" id="function_hour_suscribe" maxlength=8 pattern="^((\d+:)?\d+:)?\d*$" placeholder="hh:mm " size=30>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="new_movie_name">Movie name</label>
+                        <input type="text" class="form-control" id="movie_name_suscribe" placeholder="Movie name">
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="new_genre">Create Function</label>
+                        <button type="button" onclick="Module.connectToAFunction()" class="btn btn-primary">Connect</button>
+                    </div>
                 </div>
             </form>
-            <button type="button" onclick="Module.createFunction()" class="btn btn-primary">Create Function</button>
-
-            <div class="row" >
-
-                <dbiv class="col">
-
-                    <form class="form-inline">
-
-                        <button type="button" class="btn btn-primary" onclick="Module.buyTickets()">Buy</button>
-
-                    </form>
-                </dbiv>
-            </div>
-
-
         </div>
 
     </div>

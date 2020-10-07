@@ -94,7 +94,6 @@ var Module = (function () {
 	}
 
 	function getAvailability(movieName,date) {
-		connect();
 		cine = $("#name_input").val();
 		date = date
 		$("#movie_name").text("Availability of: "+movieName);
@@ -109,8 +108,6 @@ var Module = (function () {
 	function drawCanvas(data) {
 		clearCanvas();
 		setCinemaFunction(data);
-		var id = cinemaFunction.date+cinemaFunction.movie.name+document.getElementById("name_input").value;
-		setID(id);
 		setAsientos(data.seats);
 		c = document.getElementById("canvasId");
 		ctx = c.getContext("2d");
@@ -232,10 +229,22 @@ var Module = (function () {
 		console.log("Disconnected");
 	}
 
-	function connect(){
+	function connectToAFunction(){
+		var cinema = $("#cinema_input_suscribe").val()
+		var movie_name = $("#movie_name_suscribe").val()
+		var date = $("#date_input_suscribe").val()
+		var hour = $("#function_hour_suscribe").val()
+		var functionDate = date;
+		var cinemafunction = api.getFunctionByNameAndDate(cinema,date,movie_name,connect);
+	}
+
+	function connect(cFunction){
+		var cFunction = cFunction;
 		if (stompClient !== null) {
 			stompClient.disconnect();
 		}
+		var id = document.getElementById("cinema_input_suscribe").value+cFunction.date+cFunction.movie.name
+		setID(id);
 		connectAndSubscribe();
 
 	}
@@ -243,13 +252,13 @@ var Module = (function () {
 
 	return {
 		getFunctionsByCinemaAndDate: getFunctionsByCinemaAndDate,
-		getAvailability: getAvailability,
 		updateFunction : updateFunction,
 		createFunction : createFunction,
 		deleteFunction : deleteFunction,
 		disconnect:disconnect,
-		connect:connect,
+		connectToAFunction:connectToAFunction,
 		buyTickets:buyTickets,
+		getAvailability:getAvailability
 
 	};
 })();
