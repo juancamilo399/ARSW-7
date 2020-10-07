@@ -30,7 +30,7 @@ Para esto, realice lo siguiente:
 
  4. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/1.1.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/1.1.png)
  
  ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/1.2.png)
   
