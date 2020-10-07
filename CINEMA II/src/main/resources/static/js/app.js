@@ -108,6 +108,9 @@ var Module = (function () {
 	function drawCanvas(data) {
 		clearCanvas();
 		setCinemaFunction(data);
+		var id = document.getElementById("name_input").value+"."+cinemaFunction.date+"."+cinemaFunction.movie.name
+		setID(id);
+		connectAndSubscribe();
 		setAsientos(data.seats);
 		c = document.getElementById("canvasId");
 		ctx = c.getContext("2d");
@@ -190,31 +193,25 @@ var Module = (function () {
 		var socket = new SockJS('/stompendpoint');
 		stompClient = Stomp.over(socket);
 
-		//subscribe to /topic/TOPICXX when connections succeed
+
 		stompClient.connect({}, function (frame) {
 			console.log('Connected: ' + frame);
 			stompClient.subscribe('/topic/buyticket.'+_id, function (eventbody) {
 				console.log("hola"+eventbody);
 				var theObject=JSON.parse(eventbody.body);
-				alert("row: "+theObject.row+" col: "+theObject.col);
-
+				getAvailability(cinemaFunction.movie.name,cinemaFunction.date)
 			});
 		});
 
 	};
 
 	function verifyAvailability (row,col) {
-		if (_asientos[row][col]){
-			_asientos[row][col]=false;
-			var st = new Seat(row, col);
-			stompClient.send("/app/buyticket."+_id, {}, JSON.stringify(st));
-			console.info("purchased ticket");
-			drawCanvas(cinemaFunction);
-		}
-		else{
-			console.info("Ticket not available");
-		}
-
+		var st = new Seat(row, col);
+		var cinema = $("#name_input").val();
+		var movie_name = cinemaFunction.movie.name;
+		var date = cinemaFunction.date;
+		stompClient.send("/app/buyticket."+_id, {}, JSON.stringify(st),cinema,date,movie_name);
+		console.info("purchased ticket");
 	}
 
 	function buyTickets(){
@@ -233,8 +230,6 @@ var Module = (function () {
 		var cinema = $("#cinema_input_suscribe").val()
 		var movie_name = $("#movie_name_suscribe").val()
 		var date = $("#date_input_suscribe").val()
-		var hour = $("#function_hour_suscribe").val()
-		var functionDate = date;
 		var cinemafunction = api.getFunctionByNameAndDate(cinema,date,movie_name,connect);
 	}
 
@@ -243,7 +238,7 @@ var Module = (function () {
 		if (stompClient !== null) {
 			stompClient.disconnect();
 		}
-		var id = document.getElementById("cinema_input_suscribe").value+cFunction.date+cFunction.movie.name
+		var id = document.getElementById("cinema_input_suscribe").value+"."+cFunction.date+"."+cFunction.movie.name
 		setID(id);
 		connectAndSubscribe();
 
