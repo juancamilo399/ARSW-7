@@ -211,7 +211,7 @@ var Module = (function () {
 		var movie_name = cinemaFunction.movie.name;
 		var date = cinemaFunction.date;
 		stompClient.send("/app/buyticket."+_id, {}, JSON.stringify(st),cinema,date,movie_name);
-		console.info("purchased ticket");
+		alert("ticket comprado");
 	}
 
 	function buyTickets(){
