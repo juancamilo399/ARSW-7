@@ -32,13 +32,13 @@ Para esto, realice lo siguiente:
  
  ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/1.1.png)
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/1.2.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/1.2.png)
   
  5. Ingrese a una función, ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/1.3.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/1.3.png)
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/1.4.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/1.4.png)
  
  6. Haga commit de lo realizado, para demarcar el avance de la parte 2.
  
@@ -60,7 +60,7 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
  
  4. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que selecciona un asiento (es decir realiza la compra del mismo ahora sin necesidad del botón), la compra del mismo es replicada en todas las instancias abiertas de la aplicación (el color de las sillas verdes disponibles debe cambiar a rojo).
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/2.1.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/2.1.png)
   
  5. Haga commit de lo realizado, para marcar el avance de la parte 2.
  
@@ -76,9 +76,9 @@ Ajuste la aplicación anterior para que pueda manejar la compra de asientos en m
  
  4. Rectifique que se puedan realizar dos compras de asientos de forma independiente, cada uno de éstos entre dos o más clientes.
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/3.1.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/3.1.png)
  
- ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/3.2.png)
+ ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/3.2.png)
  
 ## Parte IV
 
@@ -106,35 +106,35 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
   
      * Ingrese en una pestaña (P1) a una función y compre un asiento, después de esto ingrese en otra pestaña (P2) e ingrese a la misma función, debería verse replicado que el asiento está lleno.
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.1.1.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.1.1.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.1.2.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.1.2.png)
      
      * Ahora en otra pestaña (P3) ingrese a otra función, esta no debería tener replicada la compra de ese asiento.
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.2.1.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.2.1.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.2.2.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.2.2.png)
      
      
      * Ingrese a la P2, y compre otro asiento, esta compra debe verse reflejada en la P1 y P2, mas no en la P3.
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.3.1.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.3.1.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.3.2.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.3.2.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.3.3.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.3.3.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.3.4.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.3.4.png)
      
      * Pruebe la funcionalidad comprando tickets en más de 2 salas al tiempo y verificando que no se cruce la compra de los asientos de una sala a otra
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.4.1.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.4.1.png)
      
-     ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/4.4.2.png)
+     ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/4.4.2.png)
   
  4. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto, teniendo en cuenta el detalle de que ahora se tendrán tópicos dinámicos para manejar diferentes salas simultáneamente y que desde el servidor se centraliza la información de las asientos de las salas.
  
-    ![](https://github.com/juancamilo399/ARSW-7/tree/main/CINEMA%20II/img/diagram.png)
+    ![](https://github.com/juancamilo399/ARSW-7/blob/main/CINEMA%20II/img/diagram.png)
  
  5. Haga commit de lo realizado.
